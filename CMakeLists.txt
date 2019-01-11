@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.13)
+project(machine_learning)
+AUX_SOURCE_DIRECTORY(./src DIR_SRCS)
+set(CMAKE_CXX_STANDARD 11)
+include_directories(include)
+add_executable(run ${DIR_SRCS})
