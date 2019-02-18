@@ -41,5 +41,6 @@ new后面的模型名称换为相应的类名即可。
 
 ![](./pic/logistic.png)
 
+##支持向量机
 
-
+![](./pic/SVM.png)
