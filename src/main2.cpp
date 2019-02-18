@@ -9,6 +9,7 @@
 #include "NavieBayes.h"
 #include "DecisionTree.h"
 #include "Logistic.h"
+#include "SVM.h"
 using std::vector;
 using std::cout;
 using std::endl;
@@ -19,7 +20,8 @@ int main() {
     //Base* obj = new Knn();
     //Base* obj = new NavieBayes();
     //Base* obj = new DecisionTree();
-    Base* obj = new Logistic();
+    //Base* obj = new Logistic();
+    Base* obj = new SVM();
     obj->run();
     delete obj;
     return 0;
