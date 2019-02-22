@@ -26,6 +26,8 @@ protected:
     std::vector<double> trainDataGT;//真值
     std::vector<double> testDataGT;
 public:
+    void setTrainD(vector<std::vector<double>>& trainF, vector<double>& trainGT) {trainDataF = trainF; trainDataGT=trainGT;}
+    void setTestD(vector<std::vector<double>>& testF, vector<double>& testGT) {testDataGT = testGT; testDataGT=testGT;}
     virtual void getData(const std::string& filename)=0;
     virtual void run()=0;
     virtual ~Base(){};
@@ -204,12 +206,20 @@ auto operator - (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] - 
 
 template <class T1, class T2>
 auto operator * (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] * arg2)>{
-    return arg2+v1;
+    return arg2*v1;
 }
 
 template <class T1, class T2>
 auto operator / (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] / arg2)>{
-    return arg2+v1;
+    if (v1.empty()){
+        cout << "vector must not empty." << endl;
+        throw v1.empty();
+    }
+    vector<decltype(v1[0]/arg2)> re(v1.size());
+    for (int i = 0; i < v1.size(); ++i) {
+        re[i] = v1[i]/arg2;
+    }
+    return re;
 }
 
 #endif //MACHINE_LEARNING_MODEL_BASE_H

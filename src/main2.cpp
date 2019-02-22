@@ -10,6 +10,7 @@
 #include "DecisionTree.h"
 #include "Logistic.h"
 #include "SVM.h"
+#include "AdaBoost.h"
 using std::vector;
 using std::cout;
 using std::endl;
@@ -21,7 +22,8 @@ int main() {
     //Base* obj = new NavieBayes();
     //Base* obj = new DecisionTree();
     //Base* obj = new Logistic();
-    Base* obj = new SVM();
+    //Base* obj = new SVM();
+    Base* obj = new AdaBoost();
     obj->run();
     delete obj;
     return 0;

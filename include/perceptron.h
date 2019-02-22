@@ -24,7 +24,7 @@ public:
     double inference(const std::vector<double>&) ;
     void initialize(std::vector<double>& init);
     void train(const int& step,const float& lr);
-    int predict(const std::vector<double>& inputData, const double& GT);
+    int predict(const std::vector<double>& inputData);
     double loss(const std::vector<double>& inputData, const double& groundTruth);
     std::pair<std::vector<double>, double> computeGradient(const std::vector<double>& inputData, const double& groundTruth);
     std::vector<std::vector<double>> getTestDataFeature(){return testDataF;}

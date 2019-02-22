@@ -255,7 +255,7 @@ void SVM::train() {
     SMO();
 }
 
-double SVM::predict(const vector<double> &inputData, const double &GT) {
+double SVM::predict(const vector<double> &inputData) {
     double p = w*inputData+b;
     if(p>0)
         return 1.0;
@@ -273,7 +273,7 @@ void SVM::run() {
     cout<<b<< endl;
     for(int i = 0; i<testDataF.size();++i){
         cout<<"the true class of this point is "<<testDataGT[i];
-        double pre = predict(testDataF[i], testDataGT[i]);
+        double pre = predict(testDataF[i]);
         cout<<", the predict class of this point is "<<pre<<endl;
 
     }

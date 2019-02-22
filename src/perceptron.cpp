@@ -86,7 +86,8 @@ double Perceptron::inference(const std::vector<double>& inputData){
 
 
 double Perceptron::loss(const std::vector<double>& inputData, const double& groundTruth){
-    double loss = -1.0 * groundTruth * inference(inputData);
+    double infer = inference(inputData);
+    double loss = -1.0 * groundTruth * infer;
     std::cout<<"loss is "<< loss <<std::endl;
     return loss;
 }
@@ -95,33 +96,34 @@ double Perceptron::loss(const std::vector<double>& inputData, const double& grou
 
 std::pair<std::vector<double>, double> Perceptron::computeGradient(const std::vector<double>& inputData, const double& groundTruth) {
     double lossVal = loss(inputData, groundTruth);
-    std::vector<double> w;
-    double b;
-    if (lossVal > 0.0)
+    std::vector<double> wi;
+    double bi;
+    if (lossVal >= 0.0)
     {
         for(auto indata:inputData) {
-            w.push_back(indata*groundTruth);
+            wi.push_back(indata*groundTruth);
         }
-        b = groundTruth;
+        bi = groundTruth;
     }
     else{
         for(auto indata:inputData) {
-            w.push_back(0.0);
+            wi.push_back(0.0);
         }
-        b = 0.0;
+        bi = 0.0;
     }
-    return std::pair<std::vector<double>, double>(w, b);//here, for understandable, we use pair to represent w and b.
+    return std::pair<std::vector<double>, double>(wi, bi);//here, for understandable, we use pair to represent w and b.
     //you also could return a vector which contains w and b.
 }
 
 
 void Perceptron::train(const int & step, const float & lr) {
+    std::vector<double> init = {1.0,1.0,1.0};
+    initialize(init);
     int count = 0;
-    createFeatureGt();
     for(int i=0; i<step; ++i){
         if (count==trainDataF.size()-1)
             count = 0;
-        count++;
+
         std::vector<double> inputData = trainDataF[count];
         double groundTruth = trainDataGT[count];
         auto grad = computeGradient(inputData, groundTruth);
@@ -131,20 +133,20 @@ void Perceptron::train(const int & step, const float & lr) {
             w[j] += lr * (grad_w[j]);
         }
         b += lr * (grad_b);
+        count++;
     }
 }
 
 
-int Perceptron::predict(const std::vector<double>& inputData, const double& GT) {
+int Perceptron::predict(const std::vector<double>& inputData) {
 
     double out = inference(inputData);
-    std::cout<<"The right class is "<<GT<<std::endl;
+
     if(out>=0.0){
-        std::cout<<"The predict class is 1"<<std::endl;
+
         return 1;
     }
     else{
-        std::cout<<"The right class is -1"<<std::endl;
         return -1;
     }
 
@@ -154,13 +156,14 @@ int Perceptron::predict(const std::vector<double>& inputData, const double& GT) 
 void Perceptron::run(){
     getData("../data/perceptrondata.txt");
     splitData(0.6);//below is split data , and store it in  trainData, testData
-    std::vector<double> init = {1.0,1.0,1.0};
-    initialize(init);
-    train(20, 1.0);//20 is steps and 1.0 is learning rate
+    createFeatureGt();
+    train(200, 1.0);//20 is steps and 1.0 is learning rate
     std::vector<std::vector<double>>  testData = getTestDataFeature();
     std::vector<double> testGT = getTestGT();
     for(int i=0; i<testData.size(); ++i){
         std::cout<<i<<std::endl;
-        predict(testData[i], testGT[i]);
+        std::cout<<"The right class is "<<testGT[i]<<std::endl;
+        int out = predict(testData[i]);
+        std::cout<<"The predict class is "<<out<<std::endl;
     }
 }

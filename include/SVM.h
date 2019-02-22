@@ -34,7 +34,7 @@ public:
     pair<double, double> SMOComputeOB(int& i1, int& i2, double&L, double& H);
     void initialize();
     void train();
-    double predict(const vector<double>& inputData, const double& GT);
+    double predict(const vector<double>& inputData);
 };
 
 #endif //MACHINE_LEARNING_SVM_H
