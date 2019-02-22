@@ -1,0 +1,8 @@
+//
+// Created by wyb on 19-2-21.
+//
+
+#ifndef MACHINE_LEARNING_ADABOOST_H
+#define MACHINE_LEARNING_ADABOOST_H
+
+#endif //MACHINE_LEARNING_ADABOOST_H
