@@ -3,7 +3,10 @@
 //
 #include "AdaBoost.h"
 
+
 using std::string;
+using std::vector;
+using std::pair;
 
 
 void AdaBoost::getData(const string &filename){

@@ -3,6 +3,14 @@
 //
 #include "NavieBayes.h"
 
+
+using std::string;
+using std::vector;
+using std::pair;
+using std::map;
+using std::set;
+
+
 void NavieBayes::getData(const std::string &filename) {
     //load data to a vector
     std::vector<double> temData;

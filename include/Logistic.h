@@ -8,23 +8,19 @@
 #include <cmath>
 #include <vector>
 #include "model_base.h"
-using std::vector;
-using std::string;
-using std::cout;
-using std::endl;
 
 class Logistic: public Base{
 private:
     vector<double> w;
 public:
-    virtual void getData(const string &filename);
+    virtual void getData(const std::string &filename);
     virtual void run();
-    double logistic(const vector<double>& data);
+    double logistic(const std::vector<double>& data);
     void createTrainTest();
-    void initialize(const vector<double>& );
+    void initialize(const std::vector<double>& );
     void train(const int& step, const double& lr);
-    vector<double> computeGradient(const vector<double>& trainFeature, double trainGrT);
-    double predict(const vector<double>& inputData, const double& GT);
+    std::vector<double> computeGradient(const std::vector<double>& trainFeature, double trainGrT);
+    double predict(const std::vector<double>& inputData, const double& GT);
 };
 
 

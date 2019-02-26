@@ -3,7 +3,10 @@
 //
 #include "SVM.h"
 
-using std::string ;
+using std::string;
+using std::vector;
+using std::pair;
+
 
 void SVM::getData(const string &filename){
     //load data to a vector

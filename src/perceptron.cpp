@@ -4,6 +4,12 @@
 
 #include "perceptron.h"
 
+
+using std::string;
+using std::vector;
+using std::pair;
+
+
 void Perceptron::getData(const std::string &filename) {
     //load data to a vector
     std::vector<double> temData;

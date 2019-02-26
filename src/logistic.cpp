@@ -3,6 +3,10 @@
 //
 #include "Logistic.h"
 
+using std::string;
+using std::vector;
+using std::pair;
+
 void Logistic::getData(const string &filename){
     //load data to a vector
     std::vector<double> temData;

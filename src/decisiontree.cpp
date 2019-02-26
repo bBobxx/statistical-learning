@@ -1,23 +1,28 @@
-//
-// Created by wyb on 19-1-11.
-//
+  //
+  // Created by wyb on 19-1-11.
+  //
 #include "DecisionTree.h"
-
-void DecisionTree::getData(const string &filename){
-    //load data to a vector
+using std::string;
+using std::vector;
+using std::pair;
+using std::map;
+using std::priority_queue;
+using std::set;
+void DecisionTree::getData(const string &filename) {
+      // load data to a vector
     std::vector<double> temData;
     double onepoint;
     std::string line;
     inData.clear();
     std::ifstream infile(filename);
-    std::cout<<"reading ..."<<std::endl;
-    while(!infile.eof()){
+    std::cout << "reading ..." << std::endl;
+    while (!infile.eof()) {
         temData.clear();
         std::getline(infile, line);
-        if(line.empty())
+        if (line.empty())
             continue;
         std::stringstream stringin(line);
-        while(stringin >> onepoint){
+        while (stringin >> onepoint) {
             temData.push_back(onepoint);
         }
         indim = temData.size();
@@ -25,8 +30,8 @@ void DecisionTree::getData(const string &filename){
         inData.push_back(temData);
     }
     for (int i = 0; i < indim; ++i)
-        features.push_back(i);//initialize features
-    std::cout<<"total data is "<<inData.size()<<std::endl;
+        features.push_back(i);  // initialize features
+    std::cout << "total data is " << inData.size() <<std::endl;
 }
 
 
@@ -42,7 +47,7 @@ void DecisionTree::createTrainTest() {
             testData.push_back(inData[i]);
 
     }
-    //create feature for test,using trainData, testData
+      //create feature for test,using trainData, testData
     for (const auto& data:trainData){
         std::vector<double> trainf;
         trainf.assign(data.begin(), data.end()-1);
@@ -80,7 +85,7 @@ DtreeNode* DecisionTree::buildTree(DtreeNode* node, vector<vector<double >>& val
             cls_right.insert(data.back());
         }
     }
-    if (cls_left.size()<=1){//belong to the same class
+    if (cls_left.size()<=1){  //belong to the same class
         node->left = new DtreeNode();
         node->left->isLeaf = true;
         node->left->leafValue = node->leftTreeVal;
@@ -91,7 +96,7 @@ DtreeNode* DecisionTree::buildTree(DtreeNode* node, vector<vector<double >>& val
     } else{
         return nullptr;
     }
-    if (cls_right.size()<=1){//belong to the same class
+    if (cls_right.size()<=1){  //belong to the same class
         node->right = new DtreeNode();
         node->right->isLeaf = true;
         node->right->leafValue = node->rightTreeVal;
@@ -112,21 +117,21 @@ DtreeNode* DecisionTree::buildTree(DtreeNode* node, vector<vector<double >>& val
 
 pair<int, double> DecisionTree::createSplitFeature(vector<vector<double >>& valRange){
     priority_queue<pair<double, pair<int, double>>, vector<pair<double, pair<int, double>>>, std::greater<pair<double, pair<int, double>>>> minheap;
-    //pair<double, pair<int, double>> first value is Gini value, second pair (pair<int, double>) first value is split
-    //axis, second value is split value
-    vector<map<double, int>> dataDivByFeature(indim);//vector size is num of axis, map's key is the value of feature, map's value is
-    //num belong to feature'value
-    vector<set<double>> featureVal(indim);//store value for each axis
-    vector<map<pair<double, double>, int>> datDivByFC(indim);//vector size is num of axis, map's key is the feature value and class value, map's value is
-    //num belong to that feature value and class
-    set<double> cls;//store num of class
+      //pair<double, pair<int, double>> first value is Gini value, second pair (pair<int, double>) first value is split
+      //axis, second value is split value
+    vector<map<double, int>> dataDivByFeature(indim);  //vector size is num of axis, map's key is the value of feature, map's value is
+      //num belong to feature'value
+    vector<set<double>> featureVal(indim);  //store value for each axis
+    vector<map<pair<double, double>, int>> datDivByFC(indim);  //vector size is num of axis, map's key is the feature value and class value, map's value is
+      //num belong to that feature value and class
+    set<double> cls;  //store num of class
     for(const auto& featureId:features) {
         if (featureId<0)
             continue;
         map<double, int> dataDivByF;
         map<pair<double, double>, int> dtDivFC;
         set<double> fVal;
-        for (auto& data:valRange){//below data[featureId] is the value of one feature axis, data.back() is class value
+        for (auto& data:valRange){  //below data[featureId] is the value of one feature axis, data.back() is class value
             cls.insert(data.back());
             fVal.insert(data[featureId]);
             if (dataDivByF.count(data[featureId]))
@@ -142,16 +147,16 @@ pair<int, double> DecisionTree::createSplitFeature(vector<vector<double >>& valR
         dataDivByFeature[featureId] = dataDivByF;
         datDivByFC[featureId] = dtDivFC;
     }
-    for (auto& featureId: features){//for each feature axis
+    for (auto& featureId: features) {  // for each feature axis
         if (featureId<0)
             continue;
-        for (auto& feVal: featureVal[featureId]){//for each feature value
+        for (auto& feVal: featureVal[featureId]){  //for each feature value
             double gini1 = 0 ;
             double gini2 = 0 ;
 
             double prob1 = dataDivByFeature[featureId][feVal]/double(valRange.size());
             double prob2 = 1 - prob1;
-            for (auto& c : cls){//for each class
+            for (auto& c : cls){  //for each class
                 double pro1 = double(datDivByFC[featureId][std::make_pair(feVal, c)])/dataDivByFeature[featureId][feVal];
                 gini1 += pro1*(1-pro1);
                 int numC = 0;
@@ -187,7 +192,7 @@ void DecisionTree::showTree(DtreeNode* node) {
     showTree(node->right);
 }
 
-void DecisionTree::run(){
+void DecisionTree::run() {
     getData("../data/decisiontree.txt");
     createTrainTest();
     initializeRoot();

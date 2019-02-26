@@ -8,11 +8,6 @@
 #include <vector>
 #include "model_base.h"
 #include "perceptron.h"
-using std::vector;
-using std::cout;
-using std::endl;
-using std::string;
-
 
 class AdaBoost: public Base {
 private:
@@ -20,7 +15,7 @@ private:
     vector<double> featrWeight;
     vector<Perceptron* > classifiers;
 public:
-    virtual void getData(const string &filename);
+    virtual void getData(const std::string &filename);
     virtual void run();
     void createTrainTest();
     int computeWeights(Perceptron* classifier);

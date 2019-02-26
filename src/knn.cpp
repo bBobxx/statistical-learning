@@ -2,6 +2,11 @@
 // Created by wyb on 18-12-18.
 //
 #include "knn.h"
+using std::string;
+using std::vector;
+using std::pair;
+using std::priority_queue;
+using std::stack;
 
 void Knn::getData(const std::string &filename) {
     //load data to a vector

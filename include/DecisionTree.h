@@ -14,23 +14,16 @@
 #include <utility>
 #include "model_base.h"
 
-using std::vector;
-using std::string;
-using std::map;
-using std::set;
-using std::pair;
-using std::cout;
-using std::endl;
-using std::priority_queue;
+
 
 
 struct DtreeNode {
-    vector<vector<double>> leafValue;
+    std::vector<std::vector<double>> leafValue;
     int axis;//split axis
     double splitVal;//split value
     bool isLeaf;
-    vector<vector<double>> leftTreeVal;
-    vector<vector<double>> rightTreeVal;
+    std::vector<std::vector<double>> leftTreeVal;
+    std::vector<std::vector<double>> rightTreeVal;
     DtreeNode* left;
     DtreeNode* right;
     DtreeNode(): isLeaf(false), axis(0), splitVal(0.0), left(nullptr), right(nullptr){};
@@ -41,14 +34,14 @@ struct DtreeNode {
 class DecisionTree: public Base{
 private:
     DtreeNode* root = nullptr;
-    vector<int> features;
+    std::vector<int> features;
 public:
     virtual void getData(const std::string &filename);
     virtual void run();
     void createTrainTest();
     void initializeRoot();
-    DtreeNode* buildTree(DtreeNode* node, vector<vector<double >>& valRange);
-    pair<int, double> createSplitFeature(vector<vector<double >>& valRange);
+    DtreeNode* buildTree(DtreeNode* node, std::vector<std::vector<double >>& valRange);
+    std::pair<int, double> createSplitFeature(std::vector<std::vector<double >>& valRange);
     void showTree(DtreeNode* node);
 
 };
