@@ -11,6 +11,7 @@
 #include "Logistic.h"
 #include "SVM.h"
 #include "AdaBoost.h"
+#include "GMM.h"
 using std::vector;
 using std::cout;
 using std::endl;
@@ -23,7 +24,8 @@ int main() {
     //Base* obj = new DecisionTree();
     //Base* obj = new Logistic();
     //Base* obj = new SVM();
-    Base* obj = new AdaBoost();
+    //Base* obj = new AdaBoost();
+    Base* obj = new GMM();
     obj->run();
     delete obj;
     return 0;

@@ -55,6 +55,13 @@ public:
     friend auto operator * (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] + arg2)>;
     template <class T1, class T2>
     friend auto operator / (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] + arg2)>;
+    template <class T1>
+    friend vector<vector<T1>> transpose(const vector<vector<T1>>& mat);
+    template <class T1>
+    friend vector<vector<T1>> vecMulVecToMat(const vector<T1>& vec1, const vector<T1>& vec2);
+    template <class T1, class T2>
+    friend auto operator + (const vector<vector<T1>>& v1, const vector<vector<T2>>& v2)
+    ->vector<vector<decltype(v1[0][0] + v2[0][0])>>;
 };
 template <class T1, class T2>
 auto operator + (const vector<T1>& v1, const vector<T2>& v2) ->vector<decltype(v1[0] + v2[0])> {
@@ -222,4 +229,36 @@ auto operator / (const vector<T1>& v1, const T2& arg2)->vector<decltype(v1[0] / 
     return re;
 }
 
+template <class T1>
+vector<vector<T1>> transpose(const vector<vector<T1>>& mat) {
+    vector<vector<T1>> newMat (mat.size(), vector<T1> (mat.size(), 0));
+    for (int i = 0; i < mat.size(); ++i) {
+        for (int j = 0; j < mat.size(); ++j)
+            newMat[i][j] = mat[j][i];
+    }
+    return newMat;
+}
+template <class T1>
+vector<vector<T1>> vecMulVecToMat(const vector<T1>& vec1, const vector<T1>& vec2) {
+    if (vec1.size() != vec2.size())
+        cout << "Two dimension of two vectors are not same!" <<  endl;
+    vector<vector<T1>> newMat (vec1.size(), vector<T1> (vec2.size(), 0));
+    for (int i = 0; i < vec1.size(); ++i) {
+        for (int j = 0; j < vec2.size(); ++j){
+            newMat[i][j] = vec1[i] * vec2[j];
+        }
+    }
+    return newMat;
+}
+
+template <class T1, class T2>
+auto operator + (const vector<vector<T1>>& v1, const vector<vector<T2>>& v2)
+->vector<vector<decltype(v1[0][0] + v2[0][0])>> {
+    if (v1.size() != v2.size())
+        std::cerr<< "Two dimension of two vectors are not same!" << endl;
+    vector<vector<decltype(v1[0][0] + v2[0][0])>> newMat;
+    for (int i = 0; i < v1.size(); ++i)
+        newMat.push_back(v1[i] + v2[i]);
+    return newMat;
+}
 #endif //MACHINE_LEARNING_MODEL_BASE_H
